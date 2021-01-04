@@ -1,11 +1,10 @@
-﻿using BlackSlope.Api.Common.Validators;
-using BlackSlope.Api.Operations.Movies.Enumerators;
+﻿using BlackSlope.Api.Operations.Movies.Enumerators;
 using BlackSlope.Api.Operations.Movies.ViewModels;
 using FluentValidation;
 
 namespace BlackSlope.Api.Operations.Movies.Validators
 {
-    public class UpdateMovieViewModelValidatorCollection : BlackslopeValidatorCollection<MovieViewModel>
+    public class UpdateMovieViewModelValidatorCollection : AbstractValidator<MovieViewModel>
     {
         public UpdateMovieViewModelValidatorCollection()
         {
@@ -21,7 +20,7 @@ namespace BlackSlope.Api.Operations.Movies.Validators
                 .WithState(x => MovieErrorCode.EmptyOrNullMovieDescription)
                 .DependentRules(() =>
                     RuleFor(x => x.Description.Length)
-                        .InclusiveBetween(2, 50).WithState(x => MovieErrorCode.TitleNotBetween2and50Characters));
+                        .InclusiveBetween(2, 50).WithState(x => MovieErrorCode.DescriptionNotBetween2and50Characters));
         }
     }
 }

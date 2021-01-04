@@ -39,12 +39,17 @@ namespace BlackSlope.Api
             services.AddAutoMapper(GetAssemblyNamesToScanForMapperProfiles());
             services.AddCorrelation();
             services.AddTransient<IFileSystem, FileSystem>();
-            services.AddTransient<IVersionService, AssemblyVersionService>();
+
+            // NOTE: Pick one of the below versioning services
+            services.AddTransient<IVersionService, AssemblyVersionService>(); // For Version parsing via Assembly ref
+            //services.AddTransient<IVersionService, JsonVersionService>();   // For Version parsing via JSON
+
             services.AddHealthChecksService();
 
             services.AddMovieService();
             services.AddMovieRepository(_configuration);
-            services.AddMovieValidators();
+
+            services.AddValidators();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
